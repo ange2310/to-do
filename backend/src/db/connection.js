@@ -11,7 +11,7 @@ const connection = new Pool({
 
 connection.connect()
     .then(client => {
-        console.log('Conexión a la base de datos establecida');
+        console.log('Conexión a la base de datos conectada');
         client.release();
     })
     .catch(err => {
