@@ -7,3 +7,7 @@ const generarToken = (usuario) => {
         email: usuario.email
     }, process.env.TOKEN_SECRET, { expiresIn: '1h' });
 }
+
+module.exports = {
+    generarToken
+}
