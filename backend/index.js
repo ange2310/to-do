@@ -4,6 +4,12 @@ require('./src/db/connection');
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(express.json());
+//Importar rutas
+const routes = require('./src/routes/index');
+app.use('/api', routes);
+
+
 //Ruta principal
 app.get('/',(req,res)=>{
     res.send('Hola Mundo');
