@@ -1,5 +1,6 @@
 const { insertUser } = require('../models/user.model');
 const { findUserByEmail } = require('../models/user.model');
+const { generarToken } = require('../config/jwt');
 const bcrypt = require('bcryptjs');
 
 //Registrar usuario
@@ -22,6 +23,30 @@ const registerUser = async(name, email , password)=>{
     };
 }
 
+// login de usuario
+const loginUser = async(email,password)=>{
+    const user = await findUserByEmail(email);
+    if(!user){
+        throw new Error('Correo o contraseña incorrectos');
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.hash_password);
+    if(!isPasswordValid){
+        throw new Error('Correo o contraseña incorrectos');
+    }
+    const token = generarToken(user);
+    return{
+        message:"Login exitoso",
+        user:{
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            token: token
+        }
+
+    }
+}
+
 module.exports = {
-    registerUser
+    registerUser,
+    loginUser
 }
