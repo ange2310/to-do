@@ -10,6 +10,16 @@ const findUserByEmail = async (email) => {
     return result.rows[0]; //retorna el usuario o undefined si no existe
 }
 
+//Obtener usuario por ID
+const findUserById = async(id)=>{
+    const query = `
+    SELECT * FROM users WHERE id = $1;
+    `;
+    const values = [id];
+    const result = await connection.query(query, values);
+    return result.rows[0]; 
+}
+
 //Registrar usuario
 const insertUser = async (name, email , password)=>{
     const query = `
@@ -24,5 +34,6 @@ const insertUser = async (name, email , password)=>{
 
 module.exports = {
     insertUser,
-    findUserByEmail
+    findUserByEmail,
+    findUserById
 }
