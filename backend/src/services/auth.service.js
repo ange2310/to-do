@@ -1,5 +1,4 @@
-const { insertUser } = require('../models/user.model');
-const { findUserByEmail } = require('../models/user.model');
+const { insertUser, findUserById, findUserByEmail } = require('../models/user.model');
 const { generarToken } = require('../config/jwt');
 const bcrypt = require('bcryptjs');
 
@@ -45,8 +44,24 @@ const loginUser = async(email,password)=>{
 
     }
 }
+//Obtener mi perfil 
+const getProfile = async(userId)=>{
+    const user = await findUserById(userId);
+    if(!user){
+        throw new Error('Usuario no encontrado');
+    }
+    return{
+        message:"Perfil obtenido exitosamente",
+        user:{
+            id: user.id,
+            name: user.name,
+            email: user.email
+        }
+    }
+}
 
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    getProfile
 }
