@@ -3,7 +3,7 @@ const connection = require('../db/connection');
 
 const findUserByEmail = async (email) => {
     const query = `
-    SELECT*FROM users WHERE email = $1;
+    SELECT * FROM users WHERE email = $1;
     `;
     const values = [email];
     const result = await connection.query(query, values);
