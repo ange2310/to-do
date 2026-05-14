@@ -17,9 +17,10 @@ const verificarToken = (req, res, next) =>{
         req.user = verified; // Agregar información del usuario al objeto de solicitud
         next(); // Continuar con la siguiente función de middleware o ruta
     } catch(error){
-        res.status(400).json({ error: "Token no válido" });
+        res.status(401).json({ error: "Token no válido" });
     }
 }
+
 module.exports = {
     verificarToken
 }

@@ -4,6 +4,9 @@ const {registerUser, loginUser, getProfile} = require('../services/auth.service'
 const register = async(req , res) =>{
     try{
         const {name, email , password} = req.body;
+        if(!name || !email || !password){
+            return res.status(400).json({message: "Nombre, email y contraseña son requeridos"});
+        }
         const result = await registerUser(name, email , password);
         res.status(201).json(result);
     }
@@ -15,6 +18,9 @@ const register = async(req , res) =>{
 const login = async(req,res)=>{
     try{
         const {email,password}=req.body;
+        if(!email || !password){
+            return res.status(400).json({message: "Email y contraseña son requeridos"});
+        }
         const result = await loginUser(email,password);
         res.status(200).json(result);
     }

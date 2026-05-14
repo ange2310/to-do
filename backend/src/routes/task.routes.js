@@ -1,18 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const {createTask, getTasks} = require('../controllers/task.controller');
+const {createTask, getTasksUser, updateTaskByUserId} = require('../controllers/task.controller');
 const {verificarToken} = require('../middlewares/auth.middleware');
 
-const authMiddleware = verificarToken;
-
-router.use(authMiddleware); // Aplicar el middleware de autenticación a todas las rutas
+router.use(verificarToken); // Aplicar el middleware de autenticación a todas las rutas
 
 //Rutas de tareas
 
 //Crear tarea
 router.post('/create', createTask);
 
-//Obtener todas las tareas
-router.get('/all', getTasks);
+//Obtener tareas del usuario autenticado
+router.get('/mine', getTasksUser);
+
+//Actualizar tarea por usuario
+router.put('/mine/:taskId', updateTaskByUserId);
 
 module.exports = router;
